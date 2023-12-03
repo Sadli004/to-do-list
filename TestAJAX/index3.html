@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-T3c6CoIi6uLrA9TneNEoa7RxnatzjcDSCmG1MXxSR1GAsXEV/Dwwykc2MPK8M2HN" crossorigin="anonymous">
+    <title>AJAX JQUERY EXAMPLE</title>
+</head>
+
+<body>
+    <div id="usersData">
+        <h3>Click here to load the user Data</h3>
+        <br>
+        <button type="button" class="btn btn-primary">Show Users</button>
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Username</th>
+                    <th>Email</th>
+                    <th>FirstName</th>
+                    <th>LastName</th>
+                    <th>BirthDate</th>
+                </tr>
+            </thead>
+            <tbody id="display"></tbody>
+        </table>
+    </div>
+
+    <script>
+        $(document).ready(function () {
+            $("button").click(function (e) {
+                e.preventDefault();
+                $.get(`http://localhost:5000/api/user/`, function (data) {
+                    // Assuming data is an array of user objects
+                    $("#display").empty(); // Clear previous data
+
+                    data.forEach(function (user) {
+                        // Create a table row for each user
+                        var row = $("<tr>").append(
+                            $("<td>").text(user.Username),
+                            $("<td>").text(user.Email),
+                            $("<td>").text(user.FirstName),
+                            $("<td>").text(user.LastName),
+                            $("<td>").text(user.BirthDate)
+                        );
+
+                        // Append the row to the table body
+                        $("#display").append(row);
+                    });
+                });
+            });
+        });
+    </script>
+</body>
+
+</html>
