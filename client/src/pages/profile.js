@@ -1,9 +1,11 @@
-import { LoginSignup } from "../compenents/LoginSignup/LoginSignup"
+
+import { LoginSignup } from "../compenents/LoginSignup/LoginSignup";
+
 
 export const Profile = () => {
     return (
         <div className="Profile-container">
-            <LoginSignup/>
+            <LoginSignup />
         </div>
     )
 }

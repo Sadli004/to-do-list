@@ -12,7 +12,7 @@ module.exports.getAllTasks = (req,res) => {
     })
 } 
 module.exports.getTask = (req,res) => {
-    const taskId = req.params.id;
+    const taskId = req.params.taskId;
     var query = "SELECT * FROM tasks WHERE TaskID = ?";
     db.query(query,[taskId],(err,result)=>{
         if(err){

@@ -2,11 +2,10 @@
   display: flex;
   flex-direction: column;
   margin: auto;
-  /* margin-top: 200px; */
   width: 600px;
   background: #fff;
-  padding-bottom: 30px;
- border-radius: 15px; 
+  padding-bottom: 24px;
+  border-radius: 15px; 
 }
 
 .header {
@@ -15,13 +14,14 @@
     align-items: center;
     gap: 9px;
     width: 100%;
-    margin-top: 30px; 
+    margin-top: 24px; 
 }
 
 .submit-container{
     display: flex;
-    gap: 30px;
-    margin: 60px auto; 
+    justify-content: center;
+    /* gap: 30px; */
+    margin: 32px auto; 
 }
 
 .text {
@@ -38,16 +38,16 @@
 }
 
 .inputs{
-    margin-top: 55px;
+    margin: 32px auto auto auto;
     display: flex;
     flex-direction: column;
-    gap: 25px;
+    
 }
 
 .input {
     display: flex;
     align-items: center;
-    margin: auto;
+    margin: 24px auto;
     width: 480px;
     height: 60px;
     background: #eaeaea;
@@ -69,8 +69,7 @@
   }
   
   .forgot-password{
-    /* padding-left: 62px; */
-    margin-top: 27px;
+    margin: 8px auto;
     color: #797979;
     font-size: 18px;
   }

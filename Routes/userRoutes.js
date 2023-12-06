@@ -10,7 +10,7 @@ router.post('/logout',authController.logout);
 // get all users
 router.get('/',userController.getAllUsers);
 // get a user
-router.get('/:id',userController.getUser);
+router.get('/:userId',userController.getUser);
 // History
 router.get('/history/:userId',userController.viewHistory)
 module.exports = router;
