@@ -1,104 +1,98 @@
-.container{
+.container {
   display: flex;
   flex-direction: column;
   margin: auto;
-  width: 600px;
+  width: 500px;
   background: #fff;
   padding-bottom: 24px;
-  border-radius: 15px; 
+  border-radius: 25px;
 }
 
 .header {
-    display: flex;   
-    flex-direction: column;
-    align-items: center;
-    gap: 9px;
-    width: 100%;
-    margin-top: 24px; 
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 9px;
+  width: 100%;
+  margin-top: 24px;
 }
 
-.submit-container{
-    display: flex;
-    justify-content: center;
-    /* gap: 30px; */
-    margin: 32px auto; 
+.submit-container {
+  display: flex;
+  justify-content: center;
+  /* gap: 30px; */
+  margin: 32px auto;
 }
 
 .text {
-    color: #164863;
-    font-size: 48px;
-    font-weight: 700;
+  color: #164863;
+  font-size: 48px;
+  font-weight: 700;
 }
 
-.underline{
-    width: 61px;
-    height: 6px;
-    background: #164863;
-    border-radius: 9px; 
+.underline {
+  width: 61px;
+  height: 6px;
+  background: #164863;
+  border-radius: 9px;
 }
 
-.inputs{
-    margin: 32px auto auto auto;
-    display: flex;
-    flex-direction: column;
-    
+.inputs {
+  margin: 32px auto auto auto;
+  display: flex;
+  flex-direction: column;
 }
 
 .input {
-    display: flex;
-    align-items: center;
-    margin: 24px auto;
-    width: 480px;
-    height: 60px;
-    background: #eaeaea;
-    border-radius: 6px;
-  }
-
-  .input img{
-    margin: 0px 30px;
-  }
-  
-  .input input{
-    height: 50px;
-    width: 400px;
-    background: transparent;
-    border: none;
-    outline: none;
-    color: #797979;
-    font-size: 19px;
-  }
-  
-  .forgot-password{
-    margin: 8px auto;
-    color: #797979;
-    font-size: 18px;
-  }
-  
-  .forgot-password span {
-    color: #164863;
-    cursor: pointer;
-  }
-  
-  
-  .submit{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 220px;
-    height: 59px;
-    color: #fff;
-    background: #164863;
-    border-radius: 50px;
-    font-size: 19px;
-    font-weight: 700;
-    cursor: pointer;
-  }
-
-.gray {
-  background: #EAEAEA;
-  color: #676767;
+  display: flex;
+  align-items: center;
+  margin: 24px auto;
+  width: 400px;
+  height: 60px;
+  background: #eaeaea;
+  border-radius: 6px;
 }
 
+.input img {
+  margin: 0px 30px;
+}
 
+.input input {
+  height: 50px;
+  width: 400px;
+  background: transparent;
+  border: none;
+  outline: none;
+  color: #797979;
+  font-size: 19px;
+}
 
+.forgot-password {
+  margin: 8px auto;
+  color: #797979;
+  font-size: 18px;
+}
 
+.forgot-password span {
+  color: #164863;
+  cursor: pointer;
+}
+
+.submit {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 220px;
+  height: 59px;
+  color: #fff;
+  background: #164863;
+  border-radius: 50px;
+  font-size: 19px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.gray {
+  background: #eaeaea;
+  color: #676767;
+}
