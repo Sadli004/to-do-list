@@ -96,3 +96,7 @@
   background: #eaeaea;
   color: #676767;
 }
+.Profile-container{
+  justify-content: center;
+  align-items: center; 
+}

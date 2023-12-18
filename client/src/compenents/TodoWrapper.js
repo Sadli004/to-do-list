@@ -12,7 +12,7 @@ export const TodoWrapper = () => {
     const [todoToDelete, setTodoToDelete] = useState(null);
 
     const addTodo = todo =>  {
-      
+     
         setTodos ([...todos, {id: uuidv4(), task: todo, completed: false, isEditing: false}])
         console.log(todos); 
       }
@@ -52,9 +52,14 @@ export const TodoWrapper = () => {
             )
           )
         }
+
+       
+
+
         
   return (
-    <div className='TodoWrapper'>
+    <div className='TodoWrapper' >
+      <div className='TodoWrapper1' >
       <h1>Get Things Done!! </h1>
         <TodoForm addTodo = {addTodo} />
         {todos.map((todo, index) => (
@@ -71,11 +76,15 @@ export const TodoWrapper = () => {
           <button className='confirmation-button' onClick={() => confirmDelete(true)}>Yes</button>
           <button className='confirmation-button' onClick={() => confirmDelete(false)}>No</button>
         </div>
+        
 
 
         
       )}
+       
         
+      </div>
+     
 
     </div>
 

@@ -1,0 +1,70 @@
+.gg-btn {
+  background-color: #164863;
+  padding: 0.55rem 1rem; 
+  border-radius: 5%; 
+  border: white; 
+  color: white;
+  margin: 0.3%;
+  cursor: pointer;
+  margin: 1px; 
+  width: 181px;
+  text-align: justify;
+}
+
+.sidebar {
+  background: #164863;
+  margin: 0rem 0rem 0rem 0rem;
+  padding: 0;
+  width: 200px;
+  color: #f1f1f1;
+  position: fixed;
+  height: 100%;
+  overflow: auto;
+  border-radius: 15px; 
+}
+
+ 
+
+.sidebarElement a {
+  display: block !important;
+  color: rgb(89, 139, 168) !important;
+  padding: 0px 0px 0px 16px;
+  text-decoration: none !important;
+  text-align: justify;
+  width: 200px;
+}
+
+hr{
+  margin-top: 5.4rem;
+  width:80%; 
+  margin-left:10% !important; 
+  margin-right:10% !important; 
+  margin-bottom: 5px;
+}
+
+.logout{
+  color: red;
+  background-color: #164863;
+  padding: 0.55rem 1rem; 
+  border-radius: 5%; 
+  border: none;
+  border-color: #164863;
+  /* margin: 0.3%; */
+  cursor: pointer;
+  margin: 1px; 
+  width: 181px;
+  text-align: justify;
+  margin-top: 21rem;
+  font-weight: bold;
+}
+
+
+.sidebarElement a:hover {
+  background-color: #427D9D;
+  color: white;
+}
+
+/* .gg-btn:hover {
+  background-color:  #103447; #427D9D;
+  color: white;
+} */

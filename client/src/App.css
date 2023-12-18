@@ -9,24 +9,32 @@
 
 body {
   background: #9BBEC8;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+ /*  display: flex;
+//  justify-content: center;
+  align-items: center; */
 }
 
 .App {
   text-align: center;
 }
 
+
 h1 {
   color: #fff;
   margin-bottom: 0.5rem;
   font-size: 1.75rem;
 }
-
-.TodoWrapper {
+.TodoWrapper1 {
   background: #164863;
-  margin-top: 5rem;
+  margin-left: 30rem;
+  margin-top: 7rem;
+  padding: 2rem;
+  width: 500px;
+  border-radius: 15px;
+}
+.TodoWrapper {
+ /*  background: #164863;
+ // margin: 4rem 24rem 2rem 24rem; */
   padding: 2rem;
   border-radius: 15px;
 }

@@ -1,9 +1,13 @@
 import React from "react";
 import { TodoWrapper } from "../compenents/TodoWrapper";
+import Sidebar from "../compenents/sidebar";
 export const Home = () => {
     return(
-        <div className="home-container">
-            <TodoWrapper />
-        </div>
+        <>
+        <Sidebar/> 
+        <TodoWrapper />
+        </>
+         
+        
     )
 }
