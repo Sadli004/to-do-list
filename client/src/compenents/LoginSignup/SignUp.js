@@ -3,6 +3,8 @@ import email_icon from "./Assets/email.png";
 import password_icon from "./Assets/password.png";
 import { useState } from "react";
 import { Login } from "./Login";
+import { Link } from "react-router-dom";
+import "./LoginSignup.css";
 import $ from "jquery";
 export const SignUp = () => {
   const [formSubmit, setFormSubmit] = useState(false);
@@ -34,11 +36,10 @@ export const SignUp = () => {
     <div>
       {formSubmit ? (
         <div className="success-signup">
-          <Login />
-          <h4>Succefully registered</h4>
+          <Login registered={formSubmit} />
         </div>
       ) : (
-        <div>
+        <div className="container">
           <div className="header">
             <div className="text">SIGN UP</div>
             <div className="underline"></div>
@@ -76,6 +77,12 @@ export const SignUp = () => {
                 <button type="submit" className="submit">
                   Submit
                 </button>
+              </div>
+              <div className="forgot-password">
+                Don't have an account ?{" "}
+                <span>
+                  <Link to={"/login"}>Sign In</Link>
+                </span>
               </div>
             </div>
           </form>

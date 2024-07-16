@@ -6,6 +6,10 @@
   background: #fff;
   padding-bottom: 24px;
   border-radius: 25px;
+  position: absolute;
+  left: 50%;
+  top: 50%;
+  transform: translate(-50%, -50%);
 }
 
 .header {
@@ -96,7 +100,11 @@
   background: #eaeaea;
   color: #676767;
 }
-.Profile-container{
-  justify-content: center;
-  align-items: center; 
+a {
+  text-decoration: none;
+  color: #164863;
+  cursor: pointer;
+}
+.success-signup h4 {
+  color: green;
 }

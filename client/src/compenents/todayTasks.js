@@ -5,26 +5,30 @@ import { EditTodoForm } from "./EditTodoForm";
 import { ConfirmationModal } from "./ConfirmationModel";
 import axios from "axios";
 
-export const TodoWrapper = () => {
+export const TodayTasks = () => {
   const [tasks, setTasks] = useState([]);
   const [showConfirmation, setShowConfirmation] = useState(false);
   const [todoToDelete, setTodoToDelete] = useState(null);
   const [editingTaskId, setEditingTaskId] = useState(null);
   const fetchTasks = async () => {
     try {
-      const response = await axios.get(`${process.env.REACT_APP_API_URL}task`, {
-        withCredentials: true,
-      });
+      const response = await axios.get(
+        `${process.env.REACT_APP_API_URL}user/history/d/0`,
+        {
+          withCredentials: true,
+        }
+      );
       setTasks(response.data);
-      // console.log("Todos :", todos);
+      console.log("Today tasks:", response.data);
     } catch (error) {
       console.error("Error fetching todos:", error);
     }
   };
+
   const addTodo = async (title) => {
     await axios
       .post(
-        `${process.env.REACT_APP_API_URL}task`,
+        `${process.env.REACT_APP_API_URL}user/history/d/0`,
         {
           title: title,
           description: "Task description",
@@ -39,6 +43,7 @@ export const TodoWrapper = () => {
       .catch(function (error) {
         console.log(error);
       });
+    fetchTasks();
   };
 
   const toggleComplete = async (TaskID, taskStatus) => {
@@ -81,6 +86,7 @@ export const TodoWrapper = () => {
     }
     setShowConfirmation(false);
     setTodoToDelete(null);
+    fetchTasks();
   };
 
   const editTodo = async (TaskID, title) => {
@@ -101,7 +107,7 @@ export const TodoWrapper = () => {
 
   useEffect(() => {
     fetchTasks();
-  }, [deleteTodo, addTodo]);
+  }, []);
   return (
     <div className="TodoWrapper">
       <div className="TodoWrapper1">

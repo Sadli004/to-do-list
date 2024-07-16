@@ -1,33 +1,37 @@
 import { useState } from "react";
 import email_icon from "./Assets/email.png";
 import password_icon from "./Assets/password.png";
-import $ from "jquery";
+import { Link } from "react-router-dom";
+import "./LoginSignup.css";
+import axios from "axios";
 
-export const Login = () => {
+export const Login = ({ registered }) => {
   const [password, setPassword] = useState("");
   const [email, setEmail] = useState("");
 
   const handleLogin = (e) => {
     e.preventDefault();
-    $.post(
-      `${process.env.REACT_APP_API_URL}user/login`,
-      {
-        email: email,
-        password: password,
-      },
-      function (data, status) {
-        if (status === "success") {
-          console.log("user logged in \n", data);
-          window.location.href = "/";
+    axios
+      .post(
+        `${process.env.REACT_APP_API_URL}user/login`,
+        {
+          email: email,
+          password: password,
+        },
+        {
+          withCredentials: "true",
         }
-        if (status !== "success") {
-          console.log("Request failed with status :", status);
-        }
-      }
-    );
+      )
+      .then(function (response) {
+        console.log(response.data);
+        window.location.href = "/";
+      })
+      .catch(function (err) {
+        console.log(err);
+      });
   };
   return (
-    <div>
+    <div className="container">
       <div className="header">
         <div className="text">LOGIN</div>
         <div className="underline"></div>
@@ -55,6 +59,11 @@ export const Login = () => {
             />
           </div>
         </div>
+        {registered && (
+          <div className="success-signup">
+            <h4>Successfully registered</h4>
+          </div>
+        )}
         <div className="submit-container">
           <button className="submit" type="submit">
             Submit
@@ -62,7 +71,10 @@ export const Login = () => {
         </div>
       </form>
       <div className="forgot-password">
-        Forgot your password ? <span>Click Here!</span>
+        Don't have an account ?{" "}
+        <span>
+          <Link to={"/register"}>Sign Up</Link>
+        </span>
       </div>
     </div>
   );

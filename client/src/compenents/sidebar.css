@@ -1,14 +1,16 @@
 .gg-btn {
   background-color: #164863;
-  padding: 0.55rem 1rem; 
-  border-radius: 5%; 
-  border: white; 
+  /* padding: 0.55rem 1rem; */
+  padding: 20px;
+  border-radius: 5%;
+  border: white;
   color: white;
   margin: 0.3%;
   cursor: pointer;
-  margin: 1px; 
+  margin: 1px;
   width: 181px;
   text-align: justify;
+  font-size: 15px;
 }
 
 .sidebar {
@@ -20,10 +22,13 @@
   position: fixed;
   height: 100%;
   overflow: auto;
-  border-radius: 15px; 
+  /* border-radius: 15px; */
 }
 
- 
+.sidebar h3 {
+  margin: 2rem auto auto;
+  text-transform: uppercase;
+}
 
 .sidebarElement a {
   display: block !important;
@@ -32,39 +37,41 @@
   text-decoration: none !important;
   text-align: justify;
   width: 200px;
+  padding: 18px;
 }
 
-hr{
-  margin-top: 5.4rem;
-  width:80%; 
-  margin-left:10% !important; 
-  margin-right:10% !important; 
+hr {
+  margin-top: 1.7rem;
+  width: 80%;
+  margin-left: 10% !important;
+  margin-right: 10% !important;
   margin-bottom: 5px;
 }
 
-.logout{
+.logout {
   color: red;
   background-color: #164863;
-  padding: 0.55rem 1rem; 
-  border-radius: 5%; 
+  padding: 0.55rem 1rem;
+  border-radius: 5%;
   border: none;
   border-color: #164863;
-  /* margin: 0.3%; */
   cursor: pointer;
-  margin: 1px; 
+  margin: 1px;
   width: 181px;
   text-align: justify;
-  margin-top: 21rem;
+  margin-top: 15rem;
+  /* margin-bottom: 21rem; */
   font-weight: bold;
+  padding: 15px;
+  font-size: 15px;
 }
 
-
 .sidebarElement a:hover {
-  background-color: #427D9D;
+  background-color: #427d9d;
   color: white;
 }
 
 /* .gg-btn:hover {
-  background-color:  #103447; #427D9D;
-  color: white;
-} */
+    background-color:  #103447; #427D9D;
+    color: white;
+  } */

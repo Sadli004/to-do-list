@@ -1,0 +1,28 @@
+.completed-container {
+  /*  background: #164863;
+  // margin: 4rem 24rem 2rem 24rem; */
+  padding: 2rem;
+  border-radius: 15px;
+}
+.completed-container1 {
+  background: #164863;
+  margin-left: 25rem;
+  margin-top: 4rem;
+  padding: 2rem;
+  width: 700px;
+  border-radius: 15px;
+}
+
+h1 {
+  margin-bottom: 2rem;
+}
+.Todo {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: #427d9d;
+  color: #fff;
+  padding: 0.75rem 1rem;
+  border-radius: 5px;
+  margin-bottom: 1rem;
+}

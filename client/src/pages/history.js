@@ -1,24 +1,44 @@
-import React from 'react'
-import Sidebar from "../compenents/sidebar";
+import React, { useEffect, useState } from "react";
+import Sidebar from "../compenents/SideBar";
+import axios from "axios";
+import "./history.css";
 
 export const History = () => {
+  const [history, setHistory] = useState([]);
+  const getHistory = async () => {
+    await axios
+      .get(`${process.env.REACT_APP_API_URL}user/history`, {
+        withCredentials: true,
+      })
+      .then(function (response) {
+        console.log("History :", response.data);
+        setHistory(response.data);
+      })
+      .catch(function (error) {
+        console.log("Error fetching history ", error);
+      });
+  };
+  useEffect(() => {
+    getHistory();
+  }, []);
   return (
-  
-    <div className='history'>
-     <Sidebar/>
-     
-      <div className="completed-container"> 
-      <div className="completed-container1"> 
-        <h1>History</h1>
-        <div className="Todo">hhhhhh</div>
-        <div className="Todo">hhhhhh</div>
-        <div className="Todo">hhhhhh</div>
-        <div className="Todo">hhhhhh</div>
-        <div className="Todo">hhhhhh</div>
-      </div>  
+    <div className="history">
+      <Sidebar />
+
+      <div className="completed-container">
+        <div className="completed-container1">
+          <h1>History</h1>
+          {history &&
+            history.map((task) => (
+              <div key={task.TaskID} className="Todo">
+                {task.Title}
+                <div className="end-date">
+                  {new Date(task.EndDate).toLocaleDateString()}
+                </div>
+              </div>
+            ))}
+        </div>
       </div>
     </div>
-       
-    
-  )
-}
+  );
+};
