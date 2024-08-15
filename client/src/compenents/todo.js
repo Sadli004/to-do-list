@@ -6,7 +6,8 @@ import { faCheck } from "@fortawesome/free-solid-svg-icons";
 import { faCircleXmark } from "@fortawesome/free-solid-svg-icons";
 
 export const Todo = ({
-  task,
+  Title,
+  Description,
   taskId,
   toggleComplete,
   taskStatus,
@@ -15,9 +16,13 @@ export const Todo = ({
 }) => {
   return (
     <div className="Todo">
-      <p className={taskStatus === "Done" ? "completed" : "incompleted"}>
-        {task}
-      </p>
+      <div className="task">
+        <h2 className={taskStatus === "Done" ? "completed" : "incompleted"}>
+          {Title}
+        </h2>
+
+        <p>{Description}</p>
+      </div>
       <div className="icons">
         <FontAwesomeIcon
           className="check-icon"

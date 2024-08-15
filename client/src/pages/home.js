@@ -1,36 +1,21 @@
-import React, { useEffect } from "react";
-import { TodoWrapper } from "../compenents/TodoWrapper";
-import Sidebar from "../compenents/SideBar";
-import { useState } from "react";
-import axios from "axios";
+import React, { useContext, useEffect } from "react";
+import { TodoWrapper } from "../compenents/Wrapper/TodoWrapper";
+import Sidebar from "../compenents/sidebar/SideBar";
+import AuthContext from "../appContext";
+import { Login } from "../compenents/LoginSignup/Login";
 export const Home = () => {
-  const [userData, setUserData] = useState(null);
-  const getUser = async () => {
-    await axios
-      .get(`${process.env.REACT_APP_API_URL}user`, {
-        withCredentials: true,
-      })
-      .then(function (response) {
-        console.log("User data : ", response.data);
-        setUserData(response.data);
-      })
-      .catch(function (error) {
-        console.log("Error fetching user data ", error);
-      });
-  };
-  // const CheckUser = () => {
-  //   if (!userData) {
-  //     window.location.href = "/login";
-  //   }
-  // };
-  useEffect(() => {
-    getUser();
-  }, []);
+  const userData = useContext(AuthContext);
+
   return (
-    // <div className="home-container">
-    <>
-      <Sidebar />
-      <TodoWrapper />
-    </>
+    <div className="home-container">
+      {userData ? (
+        <div className="content-container">
+          <Sidebar />
+          <TodoWrapper />
+        </div>
+      ) : (
+        <Login />
+      )}
+    </div>
   );
 };

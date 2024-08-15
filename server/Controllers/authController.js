@@ -4,81 +4,115 @@ require("dotenv").config();
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
-//Register
+// Register
 module.exports.signUp = async (req, res) => {
-  const username = req.body.username;
-  const salt = await bcrypt.genSalt();
-  const password = await bcrypt.hash(req.body.password, salt);
-  const Email = req.body.Email;
-  if (!isEmail(Email)) {
-    console.log("Send a valid email");
-  } else {
+  try {
+    const { username, password, Email } = req.body;
+
+    if (!username || !password || !Email) {
+      return res.status(400).json({ message: "All fields are required" });
+    }
+
+    if (!isEmail(Email)) {
+      return res.status(400).json({ message: "Invalid email format" });
+    }
+
+    const salt = await bcrypt.genSalt();
+    const hashedPassword = await bcrypt.hash(password, salt);
+
     const query =
       "INSERT INTO users (Username, Email, Password) VALUES (?,?,?)";
-    const values = [username, Email, password];
+    const values = [username, Email, hashedPassword];
+
     db.query(query, values, (err, result) => {
       if (err) {
-        res.status(500).send("Internal server error");
-        console.log("Query error :", err);
-      } else {
-        res.send(result);
+        console.error("Database query error:", err);
+        return res
+          .status(500)
+          .json({ message: "Database error occurred while registering user" });
       }
+      res.status(201).json({ message: "User registered successfully", result });
     });
+  } catch (error) {
+    console.error("Sign up error:", error);
+    res
+      .status(500)
+      .json({ message: "An unexpected error occurred during registration" });
   }
 };
-// LOGIN
+
+// Login
 module.exports.signIn = async (req, res) => {
-  const email = req.body.email;
-  const password = req.body.password;
+  try {
+    const { email, password } = req.body;
 
-  const query = `SELECT * FROM users WHERE Email = ?`;
-  db.query(query, [email], (err, results) => {
-    if (err) {
-      console.error("Query error:", err);
-      return res.status(500).send("Internal server error");
+    if (!email || !password) {
+      return res
+        .status(400)
+        .json({ message: "Email and password are required" });
     }
 
-    if (results.length === 0) {
-      return res.status(401).json({ message: "Invalid email or password" });
-    }
-
-    const userId = results[0].UserID;
-
-    bcrypt.compare(password, results[0].Password, (err, result) => {
+    const query = "SELECT * FROM users WHERE Email = ?";
+    db.query(query, [email], async (err, results) => {
       if (err) {
-        console.error("Password comparison error:", err);
-        return res.status(500).json({ error: "Internal server error" });
+        console.error("Database query error:", err);
+        return res
+          .status(500)
+          .json({ message: "Database error occurred while logging in" });
       }
 
-      if (!result) {
-        return res.status(401).json({ message: "Invalid email or password" });
+      if (results.length === 0) {
+        return res.status(404).json({ message: "Email not found" });
+      }
+
+      const user = results[0];
+      const isPasswordValid = await bcrypt.compare(password, user.Password);
+
+      if (!isPasswordValid) {
+        return res.status(401).json({ message: "Incorrect password" });
       }
 
       const secret = process.env.TOKEN_SECRET;
-      jwt.sign({ user: userId }, secret, { expiresIn: "3d" }, (err, token) => {
-        if (err) {
-          console.error("Token signing error:", err);
-          return res.status(500).json({ error: "Internal server error" });
+      jwt.sign(
+        { user: user.UserID },
+        secret,
+        { expiresIn: "3d" },
+        (err, token) => {
+          if (err) {
+            console.error("Token signing error:", err);
+            return res
+              .status(500)
+              .json({ message: "Error occurred while generating token" });
+          }
+
+          res.cookie("jwt", token, {
+            httpOnly: true,
+            secure: true,
+            sameSite: "None",
+            expires: new Date(Date.now() + 3 * 24 * 60 * 60 * 1000),
+          });
+
+          res.json({ message: "User logged in successfully", token });
         }
-
-        res.cookie("jwt", token, {
-          httpOnly: true,
-          secure: true,
-          sameSite: "None",
-          expires: new Date(Date.now() + 3 * 24 * 60 * 60 * 1000),
-          // domain: "localhost:3000",
-        });
-
-        res.json({ message: "User logged in", token });
-      });
+      );
     });
-  });
+  } catch (error) {
+    console.error("Sign in error:", error);
+    res
+      .status(500)
+      .json({ message: "An unexpected error occurred during login" });
+  }
 };
 
-//Logout
+// Logout
 module.exports.logout = (req, res) => {
-  // Clear the token cookie
-  res.clearCookie("jwt", { httpOnly: true, secure: true, sameSite: "None" });
-  // Respond with a success message
-  res.json({ message: "User logged out" });
+  try {
+    res.clearCookie("jwt", { httpOnly: true, secure: true, sameSite: "None" });
+    res.json({ message: "User logged out successfully" });
+  } catch (error) {
+    console.error("Logout error:", error);
+    res
+      .status(500)
+      .json({ message: "An unexpected error occurred during logout" });
+  }
 };

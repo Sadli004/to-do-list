@@ -1,17 +1,5 @@
 const db = require("../Config/db");
 
-//get all users
-// module.exports.getAllUsers = (req, res) => {
-//   const query = "SELECT * FROM users";
-//   db.query(query, (err, result) => {
-//     if (err) {
-//       console.error("Query error : ", err);
-//       res.status(500).send("Internal server error");
-//     } else {
-//       res.send(result);
-//     }
-//   });
-// };
 // get a user
 module.exports.getUser = (req, res) => {
   const userId = req.user;
@@ -21,7 +9,7 @@ module.exports.getUser = (req, res) => {
       console.error("Query error : ", err);
       res.status(500).send("Internal server error");
     } else {
-      res.send(result);
+      res.status(200).json(result);
     }
   });
 };
@@ -40,7 +28,6 @@ module.exports.viewHistory = (req, res) => {
     }
   });
 };
-// module.exports.viewDay = (req, res) => {
 //   const userId = req.user;
 //   const date = new Date();
 
@@ -80,7 +67,7 @@ module.exports.viewDay = (req, res) => {
   let formattedDate = `${year}-${month.toString().padStart(2, "0")}-${day
     .toString()
     .padStart(2, "0")}`;
-  console.log("Task created on:", formattedDate);
+
   const query = "SELECT * FROM tasks WHERE UserID = ? AND CreatedDate = ?";
   // var values = [userId, currentDate];
   db.query(query, [userId, formattedDate], (err, result) => {

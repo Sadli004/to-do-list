@@ -52,6 +52,7 @@ export const SignUp = () => {
                   type="text"
                   placeholder="Username"
                   value={userName}
+                  autoComplete="off"
                   onChange={(e) => setUserName(e.target.value)}
                 />
               </div>
@@ -61,6 +62,7 @@ export const SignUp = () => {
                   type="email"
                   placeholder="Email"
                   value={email}
+                  autoComplete="off"
                   onChange={(e) => setEmail(e.target.value)}
                 />
               </div>
@@ -70,6 +72,7 @@ export const SignUp = () => {
                   type="password"
                   placeholder="Password"
                   value={password}
+                  autoComplete="off"
                   onChange={(e) => setPassword(e.target.value)}
                 />
               </div>

@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from "react";
-import Sidebar from "../compenents/SideBar";
+import Sidebar from "../compenents/sidebar/SideBar";
 import axios from "axios";
-import "./history.css";
 
 export const History = () => {
   const [history, setHistory] = useState([]);
@@ -11,7 +10,6 @@ export const History = () => {
         withCredentials: true,
       })
       .then(function (response) {
-        console.log("History :", response.data);
         setHistory(response.data);
       })
       .catch(function (error) {

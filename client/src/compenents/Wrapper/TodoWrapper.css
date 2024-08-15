@@ -1,0 +1,75 @@
+.TodoWrapper {
+  grid-column: 2/3;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  height: 100vh;
+  .TodoWrapper1 {
+    padding: 2rem;
+    border-radius: 15px;
+    background: #427d9d;
+    width: 90%;
+    height: 90%;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    .header {
+      display: flex;
+      flex-direction: row;
+      align-items: center;
+      justify-content: space-between;
+      .header-options {
+        display: flex;
+        align-items: center;
+        gap: 10px;
+        button {
+          padding: 7px;
+          color: #fff;
+          background: #164863;
+          border: none;
+          border-radius: 5px;
+          cursor: pointer;
+        }
+        .search {
+          background: #ddf2fd;
+          border-radius: 5px;
+          display: flex;
+          align-items: center;
+          .icon {
+            color: #164863;
+            font-size: 18px;
+            margin-right: 5px;
+            margin-left: 5px;
+          }
+          input {
+            background: transparent;
+            border: none;
+            padding: 7px;
+            color: #164863;
+            width: 200px;
+          }
+        }
+        .filter {
+          background: #ddf2fd;
+          padding: 5px;
+          border-radius: 5px;
+          color: #164863;
+          cursor: pointer;
+        }
+      }
+    }
+    .tasks-list {
+      overflow: auto;
+      border-radius: 5px;
+      .Todo {
+        border-bottom: 1px solid #164863;
+        .task {
+          display: flex;
+          flex-direction: column;
+          align-items: start;
+        }
+      }
+    }
+  }
+}

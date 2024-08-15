@@ -1,0 +1,101 @@
+.sidebar {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  background: #164863;
+  margin: 0rem 0rem 0rem 0rem;
+  padding: 0;
+  width: 250px;
+  color: #f1f1f1;
+  position: fixed;
+  height: 100%;
+  overflow: auto;
+  h3 {
+    margin: 2rem auto auto;
+    text-transform: uppercase;
+  }
+  hr {
+    /* margin-top: 1.7rem; */
+    width: 80%;
+    color: #ffffff;
+    margin-left: 10% !important;
+    margin-right: 10% !important;
+    margin-bottom: 5px;
+  }
+  .sidebar-content {
+    .sidebar-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-top: 15px;
+      margin-left: 5px;
+      .user-info {
+        display: flex;
+        align-items: center;
+        /* margin-bottom: 1rem; */
+        gap: 10px;
+        img {
+          width: 35px;
+          height: 35px;
+          border-radius: 50%;
+          object-fit: cover;
+        }
+      }
+    }
+    .sidebar-elements {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+      align-items: center;
+      a {
+        display: block !important;
+        text-decoration: none !important;
+        text-align: justify;
+        width: 90%;
+        padding: 18px;
+      }
+      a:hover {
+        background-color: #427d9d;
+        color: #ffffff;
+      }
+    }
+
+    .gg-btn {
+      background-color: #164863;
+
+      padding: 20px;
+      border-radius: 5%;
+      border: white;
+      color: white;
+
+      cursor: pointer;
+
+      text-align: justify;
+      font-size: 15px;
+    }
+    .gg-btn.active {
+      background-color: #ffffff; /* Change to your desired background color */
+      color: #164863; /* Change to your desired text color */
+    }
+  }
+}
+
+.logout-container {
+  color: red;
+
+  padding: 0.55rem 1rem;
+  border-radius: 5%;
+  border: none;
+  cursor: pointer;
+  margin: 1px;
+  width: 181px;
+  text-align: justify;
+
+  font-weight: bold;
+  padding: 15px;
+  font-size: 15px;
+  a {
+    color: red;
+    text-decoration: none;
+  }
+}
