@@ -69,7 +69,12 @@
     color: #797979;
     font-size: 19px;
   }
-
+  .google-login {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 5px;
+  }
   .forgot-password {
     margin: 8px auto;
     color: #797979;

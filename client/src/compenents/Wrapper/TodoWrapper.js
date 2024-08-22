@@ -15,7 +15,7 @@ export const TodoWrapper = () => {
   const [todoToDelete, setTodoToDelete] = useState(null);
   const [editingTaskId, setEditingTaskId] = useState(null);
   const [searchTerm, setSearchTerm] = useState("");
-  const [taskChanged, setTaskChanged] = useState(false); // New state variable
+  const [taskChanged, setTaskChanged] = useState(false);
 
   const fetchTasks = async () => {
     try {
@@ -146,7 +146,7 @@ export const TodoWrapper = () => {
           </div>
         </div>
         <div className="tasks-list">
-          {tasks.map((task) =>
+          {tasks.map((task, index) =>
             editingTaskId === task.TaskID ? (
               <EditTodoForm
                 key={task.TaskID}
@@ -166,6 +166,7 @@ export const TodoWrapper = () => {
                   toggleComplete={toggleComplete}
                   deleteTodo={deleteTodo}
                   toggleEdit={toggleEdit}
+                  isLast={index === tasks.length - 1}
                 />
                 {showConfirmation && todoToDelete === task.TaskID && (
                   <ConfirmationModal

@@ -16,4 +16,8 @@ router.get("/", verifyToken, userController.getUser);
 router.get("/history", verifyToken, userController.viewHistory);
 // Today history
 router.get("/history/d/0", verifyToken, userController.viewDay);
+
+// google auth
+router.post("/auth/google", authController.googleAuth);
+router.get("/oauth", authController.googleCallback);
 module.exports = router;

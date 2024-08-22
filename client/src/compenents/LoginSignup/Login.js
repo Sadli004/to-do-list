@@ -4,8 +4,7 @@ import password_icon from "./Assets/password.png";
 import { Link } from "react-router-dom";
 import "./LoginSignup.css";
 import axios from "axios";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faEye } from "@fortawesome/free-solid-svg-icons";
+import GoogleButton from "react-google-button";
 
 export const Login = ({ registered }) => {
   const [password, setPassword] = useState("");
@@ -38,6 +37,20 @@ export const Login = ({ registered }) => {
     const passwordInput = document.querySelector("input[name='password']");
     passwordInput.type =
       passwordInput.type === "password" ? "text" : "password";
+  };
+  function navigate(url) {
+    window.location.href = url;
+  }
+  const googleLogin = async () => {
+    const response = await fetch(
+      `${process.env.REACT_APP_API_URL}user/auth/google`,
+      {
+        method: "POST",
+        credentials: "include",
+      }
+    );
+    const data = await response.json();
+    navigate(data.url);
   };
   return (
     <div className="container">
@@ -87,6 +100,15 @@ export const Login = ({ registered }) => {
           </button>
         </div>
       </form>
+      <div className="google-login">
+        <GoogleButton
+          type="light"
+          onClick={() => {
+            // Google OAuth code here
+            googleLogin();
+          }}
+        />
+      </div>
       <div className="forgot-password">
         Don't have an account ?{" "}
         <span>

@@ -13,9 +13,10 @@ export const Todo = ({
   taskStatus,
   deleteTodo,
   toggleEdit,
+  isLast,
 }) => {
   return (
-    <div className="Todo">
+    <div className={`Todo ${isLast ? "last-todo" : ""}`}>
       <div className="task">
         <h2 className={taskStatus === "Done" ? "completed" : "incompleted"}>
           {Title}

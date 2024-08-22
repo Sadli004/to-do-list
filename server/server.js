@@ -6,8 +6,7 @@ const taskRoutes = require("./Routes/taskRoutes");
 const userRoutes = require("./Routes/userRoutes");
 const bodyParser = require("body-parser");
 const cookieparser = require("cookie-parser");
-const { searchTask } = require("./Controllers/taskController");
-
+const { googleCallback } = require("./Controllers/authController");
 // Allow requests
 app.use(
   cors({
@@ -22,7 +21,7 @@ app.use(express.json());
 // Routes
 app.use("/api/user", userRoutes);
 app.use("/api/task", taskRoutes);
-app.use("api/task/search", searchTask);
+// app.get("/oath", googleCallback);
 app.listen(process.env.PORT, (err) => {
   if (err) {
     console.error("Error:", err);

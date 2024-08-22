@@ -16,16 +16,7 @@ export const EditTodoForm = ({ taskId, Title, editTodo, toggleEdit }) => {
   };
   return (
     <div className="edit-todo-container">
-      <form
-        className="TodoForm update-form"
-        style={{
-          display: "flex",
-          alignItems: "baseline",
-          gap: "2px",
-          borderRadius: "0px",
-        }}
-        onSubmit={handleSubmit}
-      >
+      <form className="TodoForm update-form" onSubmit={handleSubmit}>
         <input
           type="text"
           className="todo-input"
@@ -33,6 +24,12 @@ export const EditTodoForm = ({ taskId, Title, editTodo, toggleEdit }) => {
           placeholder=" Update Task "
           onChange={(e) => setTitle(e.target.value)}
         ></input>
+        <p className="error-message">
+          {Title.length > 50 && "Title cannot exceed 50 characters"}
+        </p>
+        <p className="error-message">
+          {title.trim() === "" && "Title cannot be empty"}
+        </p>
         <div
           className="edit-buttons"
           style={{ display: "flex", alignItems: "baseline", gap: "2px" }}
