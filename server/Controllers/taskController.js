@@ -2,7 +2,7 @@ const db = require("../Config/db");
 
 module.exports.getUserTasks = (req, res) => {
   const userId = req.user;
-  var query = "SELECT * FROM tasks WHERE UserID = ? ORDER BY CreatedDate DESC";
+  var query = "SELECT * FROM tasks  WHERE UserID = ? ORDER BY CreatedDate DESC";
   db.query(query, [userId], (err, result) => {
     if (err) {
       console.error("Query error : ", err);
@@ -26,8 +26,7 @@ module.exports.getTask = (req, res) => {
 };
 module.exports.createTask = (req, res) => {
   const userId = req.user;
-  const title = req.body.title;
-  const description = req.body.description;
+  const { title, description } = req.body;
   const date = new Date();
 
   let day = date.getDate();
@@ -108,8 +107,8 @@ module.exports.todayTasks = (req, res) => {
   let formattedDate = `${year}-${month.toString().padStart(2, "0")}-${day
     .toString()
     .padStart(2, "0")}`;
-  var query = "SELECT * FROM tasks WHERE UserID = ? AND CreatedDate = ?";
-  db.query(query, formattedDate, (err, results) => {
+  var query = "SELECT * FROM tasks  WHERE UserID = ? AND CreatedDate = ?";
+  db.query(query, [userId, formattedDate], (err, results) => {
     if (err) {
       console.error("Query error : ", err);
       res.status(500).send("Internal server error");

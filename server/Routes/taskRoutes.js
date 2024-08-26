@@ -10,12 +10,13 @@ router.post("/", verifyToken, taskController.createTask);
 // update a task
 router.patch("/:taskId", taskController.editTask);
 // //filter tasks
-// router.get("/filter", verifyToken, taskController.todayTasks);
+router.get("/today", verifyToken, taskController.todayTasks);
 // //search
 
 router.get("/search", taskController.searchTask);
 //get a task
 router.get("/:taskId", taskController.getTask);
+
 // //update task status
 //delete task
 router.delete("/:id", verifyToken, taskController.deleteTask);

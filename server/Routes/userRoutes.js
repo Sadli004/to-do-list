@@ -1,6 +1,10 @@
 const router = require("express").Router();
 const userController = require("../Controllers/userController");
 const authController = require("../Controllers/authController");
+const {
+  googleAuth,
+  googleCallback,
+} = require("../Controllers/OAuthController");
 const { verifyToken } = require("../Middleware/authmiddleware");
 //Login
 router.post("/login", authController.signIn);
@@ -18,6 +22,6 @@ router.get("/history", verifyToken, userController.viewHistory);
 router.get("/history/d/0", verifyToken, userController.viewDay);
 
 // google auth
-router.post("/auth/google", authController.googleAuth);
-router.get("/oauth", authController.googleCallback);
+router.post("/auth/google", googleAuth);
+router.get("/oauth", googleCallback);
 module.exports = router;

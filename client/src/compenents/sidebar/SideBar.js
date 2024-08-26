@@ -49,18 +49,16 @@ const Sidebar = () => {
         </div>
         <hr></hr>
         <div className="sidebar-elements">
-          <Link
+          {/* <Link
             to="/"
             className={`gg-btn ${location.pathname === "/" ? "active" : ""}`}
           >
             <FontAwesomeIcon icon={faHouse} style={{ marginRight: "0.5rem" }} />
             Home
-          </Link>
+          </Link> */}
           <Link
-            to="/today"
-            className={`gg-btn ${
-              location.pathname === "/today" ? "active" : ""
-            }`}
+            to="/"
+            className={`gg-btn ${location.pathname === "/" ? "active" : ""}`}
           >
             <FontAwesomeIcon
               icon={faCalendarDay}

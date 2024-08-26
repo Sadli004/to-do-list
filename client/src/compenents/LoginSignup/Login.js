@@ -29,8 +29,8 @@ export const Login = ({ registered }) => {
         window.location.href = "/";
       })
       .catch((err) => {
-        console.log(err.response.data.message);
-        setError(err.response.data.message);
+        console.log(err);
+        // setError(err);
       });
   };
   const handleShowPassword = () => {

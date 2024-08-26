@@ -2,8 +2,9 @@ const { default: isEmail } = require("validator/lib/isEmail");
 const db = require("../Config/db");
 require("dotenv").config();
 const bcrypt = require("bcrypt");
-const jwt = require("jsonwebtoken");
-const { OAuth2Client } = require("google-auth-library");
+
+const { CreateJWT } = require("../Middleware/authmiddleware");
+
 // Register
 module.exports.signUp = async (req, res) => {
   try {
@@ -31,7 +32,18 @@ module.exports.signUp = async (req, res) => {
           .status(500)
           .json({ message: "Database error occurred while registering user" });
       }
-      res.status(201).json({ message: "User registered successfully", result });
+      const token = CreateJWT(result[0].UserID);
+      res.cookie("jwt", token, {
+        httpOnly: true,
+        secure: true,
+        sameSite: "Strict",
+        expires: new Date(Date.now() + 3 * 24 * 60 * 60 * 1000),
+      });
+
+      return res.status(201).json({
+        message: "User registered successfully",
+        result: { id: result.insertId },
+      });
     });
   } catch (error) {
     console.error("Sign up error:", error);
@@ -72,29 +84,15 @@ module.exports.signIn = async (req, res) => {
         return res.status(401).json({ message: "Incorrect password" });
       }
 
-      const secret = process.env.TOKEN_SECRET;
-      jwt.sign(
-        { user: user.UserID },
-        secret,
-        { expiresIn: "3d" },
-        (err, token) => {
-          if (err) {
-            console.error("Token signing error:", err);
-            return res
-              .status(500)
-              .json({ message: "Error occurred while generating token" });
-          }
+      const token = CreateJWT(results[0].UserID);
+      res.cookie("jwt", token, {
+        httpOnly: true,
 
-          res.cookie("jwt", token, {
-            httpOnly: true,
-            secure: true,
-            sameSite: "None",
-            expires: new Date(Date.now() + 3 * 24 * 60 * 60 * 1000),
-          });
+        sameSite: "Strict",
+        expires: new Date(Date.now() + 3 * 24 * 60 * 60 * 1000),
+      });
 
-          res.json({ message: "User logged in successfully", token });
-        }
-      );
+      res.json({ message: "User logged in successfully", token });
     });
   } catch (error) {
     console.error("Sign in error:", error);
@@ -107,71 +105,15 @@ module.exports.signIn = async (req, res) => {
 // Logout
 module.exports.logout = (req, res) => {
   try {
-    res.clearCookie("jwt", { httpOnly: true, secure: true, sameSite: "None" });
+    res.clearCookie("jwt", {
+      httpOnly: true,
+      sameSite: "Strict",
+    });
     res.json({ message: "User logged out successfully" });
   } catch (error) {
     console.error("Logout error:", error);
     res
       .status(500)
       .json({ message: "An unexpected error occurred during logout" });
-  }
-};
-
-// Google auth
-module.exports.googleAuth = async (req, res, next) => {
-  res.header("Access-Control-Allow-Origin", `${process.env.CLIENT_URL}`);
-  res.header("Access-Control-Allow-Credentials", true);
-  res.header("Referrer-Policy", "no-referrer-when-downgrade");
-
-  const redirectUrl = `http://localhost:${process.env.PORT}/api/user/oauth`;
-  const OAuthClient = new OAuth2Client({
-    clientId: process.env.GOOGLE_CLIENT_ID,
-    clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-    redirectUri: redirectUrl,
-  });
-  const authorizationUrl = await OAuthClient.generateAuthUrl({
-    access_type: "offline",
-    scope: "https://www.googleapis.com/auth/userinfo.profile openid",
-    prompt: "consent",
-  });
-  res.status(200).json({ url: authorizationUrl });
-};
-// function to get user info from google
-const getGoogleUserInfo = async (token) => {
-  const url = `https://www.googleapis.com/oauth2/v2/userinfo?access_token=${token}`;
-  const response = await fetch(url);
-  const data = await response.json();
-
-  return data;
-};
-// Google callback
-module.exports.googleCallback = async (req, res, next) => {
-  const { code } = req.query;
-
-  try {
-    const redirectUrl = `http://localhost:${process.env.PORT}/api/user/oauth`;
-    const oAuth2Client = new OAuth2Client({
-      clientId: process.env.GOOGLE_CLIENT_ID,
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-      redirectUri: redirectUrl,
-    });
-
-    console.log("redirect url", redirectUrl);
-    console.log("code", code);
-
-    const tokenResponse = await oAuth2Client.getToken(code);
-    // console.log("tokenResponse", tokenResponse);
-
-    if (!tokenResponse.tokens) {
-      console.log("No tokens found in tokenResponse");
-    } else {
-      const accessToken = tokenResponse.tokens.access_token;
-
-      const userInfo = await getGoogleUserInfo(accessToken);
-
-      res.status(200).json({ message: "User authenticated successfully" });
-    }
-  } catch (error) {
-    console.log("google callback error:", error.message);
   }
 };

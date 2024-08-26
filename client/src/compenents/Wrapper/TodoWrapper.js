@@ -19,9 +19,13 @@ export const TodoWrapper = () => {
 
   const fetchTasks = async () => {
     try {
-      const response = await axios.get(`${process.env.REACT_APP_API_URL}task`, {
-        withCredentials: true,
-      });
+      const response = await axios.get(
+        `${process.env.REACT_APP_API_URL}task/today`,
+        {
+          withCredentials: true,
+        }
+      );
+
       setTasks(response.data);
     } catch (error) {
       console.error("Error fetching todos:", error);
