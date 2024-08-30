@@ -1,15 +1,18 @@
-import React, { useState, useContext } from "react";
+import React, { useContext } from "react";
 import { Link, useLocation } from "react-router-dom";
 import axios from "axios";
 import "./sidebar.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import {
-  faArrowRightFromBracket,
   faHouse,
-  faClockRotateLeft,
+  faArrowRightFromBracket,
   faCalendarDay,
   faBell,
-  faBellSlash,
+  faCircleCheck,
+  faGear,
+  faCalendar,
+  faClock,
+  faHourglass,
 } from "@fortawesome/free-solid-svg-icons";
 import Cookies from "js-cookie";
 import AuthContext from "../../appContext";
@@ -44,21 +47,24 @@ const Sidebar = () => {
             <h2>{userData[0].Username}</h2>
           </div>
           <div className="icons">
+            <FontAwesomeIcon icon={faGear} />
             <FontAwesomeIcon icon={faBell} />
           </div>
         </div>
-        <hr></hr>
+
         <div className="sidebar-elements">
-          {/* <Link
+          <Link
             to="/"
             className={`gg-btn ${location.pathname === "/" ? "active" : ""}`}
           >
             <FontAwesomeIcon icon={faHouse} style={{ marginRight: "0.5rem" }} />
-            Home
-          </Link> */}
+            My Tasks
+          </Link>
           <Link
-            to="/"
-            className={`gg-btn ${location.pathname === "/" ? "active" : ""}`}
+            to="/today"
+            className={`gg-btn ${
+              location.pathname === "/today" ? "active" : ""
+            }`}
           >
             <FontAwesomeIcon
               icon={faCalendarDay}
@@ -67,16 +73,29 @@ const Sidebar = () => {
             Today
           </Link>
           <Link
-            to="/history"
+            to="/upcoming"
             className={`gg-btn ${
-              location.pathname === "/history" ? "active" : ""
+              location.pathname === "/upcoming" ? "active" : ""
             }`}
           >
             <FontAwesomeIcon
-              icon={faClockRotateLeft}
+              icon={faHourglass}
               style={{ marginRight: "0.5rem" }}
             />
-            History
+            Upcoming
+          </Link>
+
+          <Link
+            to="/completed"
+            className={`gg-btn ${
+              location.pathname === "/completed" ? "active" : ""
+            }`}
+          >
+            <FontAwesomeIcon
+              icon={faCircleCheck}
+              style={{ marginRight: "0.5rem" }}
+            />
+            Completed
           </Link>
         </div>
       </div>

@@ -67,7 +67,16 @@
         .task {
           display: flex;
           flex-direction: column;
-          align-items: start;
+          align-items: flex-start;
+          .dueDate {
+            font-size: 0.85em;
+            color: red;
+            /* margin-top: 5px; */
+          }
+          .EndDate {
+            font-size: 0.85em;
+            color: green;
+          }
         }
       }
       .Todo.last-todo {

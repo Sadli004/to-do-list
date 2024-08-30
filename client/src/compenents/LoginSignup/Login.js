@@ -33,11 +33,7 @@ export const Login = ({ registered }) => {
         // setError(err);
       });
   };
-  const handleShowPassword = () => {
-    const passwordInput = document.querySelector("input[name='password']");
-    passwordInput.type =
-      passwordInput.type === "password" ? "text" : "password";
-  };
+
   function navigate(url) {
     window.location.href = url;
   }
@@ -81,7 +77,6 @@ export const Login = ({ registered }) => {
               autoComplete="off"
               onChange={(e) => setPassword(e.target.value)}
             />
-            {/* <FontAwesomeIcon icon={faEye} onClick={handleShowPassword} /> */}
           </div>
         </div>
         {registered && (

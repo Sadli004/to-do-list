@@ -5,50 +5,23 @@ import { EditTodoForm } from "../EditTodoForm";
 import { ConfirmationModal } from "../ConfirmationModel";
 import axios from "axios";
 import "./TodoWrapper.css";
+import { useLocation } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faPlus, faSearch, faSliders } from "@fortawesome/free-solid-svg-icons";
+import { faPlus, faSliders } from "@fortawesome/free-solid-svg-icons";
+import SearchComponent from "../searchComponent";
 
-export const TodoWrapper = () => {
-  const [tasks, setTasks] = useState([]);
+export const TodoWrapper = ({
+  tasks,
+  setTasks,
+  taskChanged,
+  setTaskChanged,
+}) => {
   const [showConfirmation, setShowConfirmation] = useState(false);
   const [showAddModel, setShowAddModel] = useState(false);
   const [todoToDelete, setTodoToDelete] = useState(null);
   const [editingTaskId, setEditingTaskId] = useState(null);
-  const [searchTerm, setSearchTerm] = useState("");
-  const [taskChanged, setTaskChanged] = useState(false);
 
-  const fetchTasks = async () => {
-    try {
-      const response = await axios.get(
-        `${process.env.REACT_APP_API_URL}task/today`,
-        {
-          withCredentials: true,
-        }
-      );
-
-      setTasks(response.data);
-    } catch (error) {
-      console.error("Error fetching todos:", error);
-    }
-  };
-
-  const handleSearch = async (searchTerm) => {
-    try {
-      console.log(searchTerm);
-
-      const response = await axios.get(
-        `${process.env.REACT_APP_API_URL}task/search`,
-        {
-          withCredentials: true,
-          params: { searchTerm },
-        }
-      );
-      console.log(response);
-      setSearchTerm("");
-    } catch (error) {
-      console.log(error.message);
-    }
-  };
+  const location = useLocation();
 
   const toggleComplete = async (TaskID, taskStatus) => {
     let newStatus = taskStatus === "Done" ? "In Progres" : "Done";
@@ -76,74 +49,40 @@ export const TodoWrapper = () => {
     setTodoToDelete(TaskID);
   };
 
-  const confirmDelete = async (confirmed) => {
-    if (confirmed) {
-      await axios
-        .delete(`${process.env.REACT_APP_API_URL}task/${todoToDelete}`, {
-          withCredentials: true,
-        })
-        .then(function (response) {
-          console.log("Deleted task ", response.data);
-          setTasks(tasks.filter((task) => task.TaskID !== todoToDelete));
-          setTaskChanged(!taskChanged); // Update state variable
-        })
-        .catch(function (err) {
-          console.log("error deleting task ", err);
-        });
-    }
-    setShowConfirmation(false);
-    setTodoToDelete(null);
-  };
-
-  const editTodo = async (TaskID, title) => {
-    await axios
-      .patch(`${process.env.REACT_APP_API_URL}task/${TaskID}`, {
-        Title: title,
-      })
-      .then(function (response) {
-        console.log("Task edited \n", response.data);
-        setTaskChanged(!taskChanged); // Update state variable
-      })
-      .catch(function (error) {
-        console.log("Error while editing: ", error);
-      });
-  };
-
   const toggleEdit = (id) => {
     setEditingTaskId(id === editingTaskId ? null : id);
   };
 
-  useEffect(() => {
-    fetchTasks();
-  }, [taskChanged]); // Add taskChanged to the dependency array
+  useEffect(() => {}, [taskChanged]); // Add taskChanged to the dependency array
 
   return (
     <div className="TodoWrapper">
       <div className="TodoWrapper1">
         <div className="header">
-          <h1>Today task's</h1>
+          {(() => {
+            switch (location.pathname) {
+              case "/":
+                return <h1>My tasks</h1>;
+              case "/completed":
+                return <h1>Completed tasks</h1>;
+              case "/today":
+                return <h1>Today's tasks</h1>;
+              default:
+                return <h1>Upcoming tasks</h1>;
+            }
+          })()}
 
           <div className="header-options">
             <button onClick={() => setShowAddModel(true)}>
               <FontAwesomeIcon icon={faPlus} />
               Add Task
             </button>
-            <div className="search">
-              <FontAwesomeIcon icon={faSearch} className="icon" />
-              <input
-                type="text"
-                placeholder="Search"
-                value={searchTerm}
-                onChange={(e) => {
-                  setSearchTerm(e.target.value);
-                }}
-                onKeyDown={(e) => {
-                  if (e.key === "Enter") {
-                    handleSearch(searchTerm);
-                  }
-                }}
-              />
-            </div>
+            <SearchComponent
+              tasks={tasks}
+              setTasks={setTasks}
+              setTaskChanged={setTaskChanged}
+              taskChanged={taskChanged}
+            />
             <div className="filter">
               <FontAwesomeIcon icon={faSliders} />
             </div>
@@ -156,8 +95,11 @@ export const TodoWrapper = () => {
                 key={task.TaskID}
                 taskId={task.TaskID}
                 Title={task.Title}
-                editTodo={editTodo}
+                Description={task.Description}
+                DueDate={task.DueDate}
                 toggleEdit={toggleEdit}
+                taskChanged={taskChanged}
+                setTaskChanged={setTaskChanged}
               />
             ) : (
               <div key={task.TaskID}>
@@ -167,6 +109,8 @@ export const TodoWrapper = () => {
                   Description={task.Description}
                   taskId={task.TaskID}
                   taskStatus={task.TaskStatus}
+                  dueDate={task.DueDate}
+                  endDate={task.EndDate}
                   toggleComplete={toggleComplete}
                   deleteTodo={deleteTodo}
                   toggleEdit={toggleEdit}
@@ -175,14 +119,23 @@ export const TodoWrapper = () => {
                 {showConfirmation && todoToDelete === task.TaskID && (
                   <ConfirmationModal
                     task={todoToDelete}
-                    confirmDelete={confirmDelete}
+                    setShowConfirmation={setShowConfirmation}
+                    setTodoToDelete={setTodoToDelete}
+                    setTaskChanged={setTaskChanged}
+                    taskChanged={taskChanged}
                   />
                 )}
               </div>
             )
           )}
         </div>
-        {showAddModel && <TodoForm setShowAddModel={setShowAddModel} />}
+        {showAddModel && (
+          <TodoForm
+            setShowAddModel={setShowAddModel}
+            taskChanged={taskChanged}
+            setTaskChanged={setTaskChanged}
+          />
+        )}
       </div>
     </div>
   );

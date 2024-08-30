@@ -16,8 +16,6 @@ router.get("/logout", authController.logout);
 // router.get("/", userController.getAllUsers);
 // get a user
 router.get("/", verifyToken, userController.getUser);
-// History
-router.get("/history", verifyToken, userController.viewHistory);
 // Today history
 router.get("/history/d/0", verifyToken, userController.viewDay);
 

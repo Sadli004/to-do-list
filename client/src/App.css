@@ -47,8 +47,21 @@ h1 {
     .inputs {
       display: flex;
       flex-direction: column;
-      gap: 10px;
-      padding: 10px;
+      /* gap: 5px; */
+      /* padding: 10px; */
+      .todo-input {
+        outline: none;
+        background: none;
+        border: none;
+        /* padding: 5px; */
+        color: #164863;
+        margin: 16px 10px;
+      }
+
+      .todo-input::placeholder {
+        color: #164863;
+        font-size: 16px;
+      }
       .todo-input.Title {
         font-size: 18px;
       }
@@ -58,7 +71,7 @@ h1 {
     }
     .actions {
       display: flex;
-      justify-content: end;
+      justify-content: flex-end;
       align-items: center;
       gap: 10px;
       padding: 10px;
@@ -76,39 +89,9 @@ h1 {
   }
 }
 
-.todo-input {
-  outline: none;
-  background: none;
-  border: none;
-  padding: 5px;
-
-  color: #164863;
-}
-
-.todo-input::placeholder {
-  color: #164863;
-  font-size: 16px;
-}
-.edit-buttons button {
-  background-color: #427d9d;
-  padding: 0.55rem 0.7rem;
-  border-radius: 5px;
-  border: #427d9d;
-  color: white;
-  cursor: pointer;
-}
 .todo-btn {
   background-color: #427d9d;
   padding: 0.55rem 1rem;
-
-  border: #427d9d;
-  color: white;
-  cursor: pointer;
-}
-.cancel-edit-btn {
-  background-color: #427d9d;
-  padding: 0.55rem 1rem;
-  border-radius: 0px 5px 5px 0;
   border: #427d9d;
   color: white;
   cursor: pointer;
@@ -123,37 +106,35 @@ h1 {
   padding: 0.75rem 1rem;
 
   border-radius: 1px solid #164863;
-  /* border-radius: 5px; */
-  /* margin-bottom: 1rem; */
+
   .tasks-list {
     overflow: auto;
     border-radius: 5px;
     .task {
       display: flex;
       flex-direction: column;
-      align-items: start;
+      align-items: flex-start;
+      .dueDate {
+        font-size: 0.85em;
+        color: red;
+        margin-top: 5px;
+      }
+      .EndDate {
+        color: green;
+      }
     }
   }
   .icons {
     display: flex;
     gap: 10px;
-    justify-content: end;
+    justify-content: flex-end;
     align-items: center;
-    /* margin-top: 0.5rem; */
-    /* svg {
-      width: 20px;
-      height: 20px;
-    } */
+
     .delete-icon {
       color: red;
     }
   }
 }
-
-/* .edit-icon,
-.delete-icon {
-  margin-left: 0.75rem;
-} */
 
 .incompleted {
   /* color: #fff; */
@@ -193,7 +174,7 @@ h1 {
   }
   .actions {
     display: flex;
-    justify-content: end;
+    justify-content: flex-end;
     gap: 10px;
 
     .confirmation-button {
@@ -216,4 +197,57 @@ h1 {
   display: flex;
   align-items: center;
   height: 100vh;
+}
+
+/* Edit form */
+.EditForm-container {
+  .EditForm {
+    display: flex;
+    flex-direction: column;
+
+    width: 100%;
+    .inputs {
+      display: flex;
+      flex-direction: column;
+      /* gap: 5px;
+      padding: 10px; */
+      border-bottom: #164863 1px solid;
+    }
+    .todo-input {
+      outline: none;
+      background: none;
+      border: none;
+      margin: 5px 10px;
+      /* padding: 5px; */
+      color: #164863;
+    }
+
+    .todo-input::placeholder {
+      color: #164863;
+      font-size: 16px;
+    }
+    .todo-input.Title {
+      font-size: 18px;
+    }
+    .todo-input.Description {
+      font-size: 14px;
+    }
+    .actions {
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      gap: 10px;
+      padding: 10px;
+      .todo-btn {
+        background-color: #427d9d;
+        padding: 7px;
+        border-radius: 5px;
+        color: white;
+        cursor: pointer;
+      }
+      .todo-btn.cancel {
+        background-color: gray;
+      }
+    }
+  }
 }

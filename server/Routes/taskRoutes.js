@@ -11,9 +11,13 @@ router.post("/", verifyToken, taskController.createTask);
 router.patch("/:taskId", taskController.editTask);
 // //filter tasks
 router.get("/today", verifyToken, taskController.todayTasks);
-// //search
+// upcoming tasks
 
-router.get("/search", taskController.searchTask);
+router.get("/upcoming", verifyToken, taskController.upcomingTasks);
+//completed tasks
+router.get("/completed", verifyToken, taskController.completedTasks);
+//search
+router.get("/search", verifyToken, taskController.searchTask);
 //get a task
 router.get("/:taskId", taskController.getTask);
 

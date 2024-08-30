@@ -26,23 +26,19 @@ module.exports.getTask = (req, res) => {
 };
 module.exports.createTask = (req, res) => {
   const userId = req.user;
-  const { title, description } = req.body;
-  const date = new Date();
+  const { title, description, dueDate } = req.body;
 
-  let day = date.getDate();
-  let month = date.getMonth() + 1;
-  let year = date.getFullYear();
+  // Format the dueDate and CreatedDate fields
+  const formattedDueDate = dueDate ? dueDate : null;
+  const formattedCreatedDate = new Date().toISOString().split("T")[0];
 
-  // Format the current date in the "YYYY-MM-DD" format
-  let formattedDate = `${year}-${month.toString().padStart(2, "0")}-${day
-    .toString()
-    .padStart(2, "0")}`;
+  const values = [
+    [userId, title, description, formattedDueDate, formattedCreatedDate],
+  ];
 
-  const values = [[userId, title, description, formattedDate]];
-  console.log(values);
-  console.log("request body : ", req.body);
   const query =
-    "INSERT INTO tasks (UserID, Title, Description,CreatedDate) VALUES ?";
+    "INSERT INTO tasks (UserID, Title, Description, DueDate, CreatedDate) VALUES ?";
+
   db.query(query, [values], (err, result) => {
     if (err) {
       console.error("Query error : ", err);
@@ -65,9 +61,6 @@ module.exports.editTask = (req, res) => {
     .map((key) => `${key} = ?`)
     .join(", ");
 
-  // console.log(setClause);
-
-  // Check if taskStatus is set to 'Done' and update endDate accordingly
   if (updatedData.TaskStatus) {
     if (updatedData.TaskStatus === "Done") {
       setClause += ", EndDate = CURRENT_DATE()";
@@ -96,18 +89,38 @@ module.exports.editTask = (req, res) => {
     }
   });
 };
+// Function to format the date
+function formatDate(date) {
+  let day = date.getDate();
+  let month = date.getMonth() + 1;
+  let year = date.getFullYear();
+  // Format the date in the "YYYY-MM-DD" format
+  return `${year}-${month.toString().padStart(2, "0")}-${day
+    .toString()
+    .padStart(2, "0")}`;
+}
 // get today tasks
 module.exports.todayTasks = (req, res) => {
   const userId = req.user;
   const today = new Date();
-  let day = today.getDate();
-  let month = today.getMonth() + 1;
-  let year = today.getFullYear();
-  // Format the current date in the "YYYY-MM-DD" format
-  let formattedDate = `${year}-${month.toString().padStart(2, "0")}-${day
-    .toString()
-    .padStart(2, "0")}`;
-  var query = "SELECT * FROM tasks  WHERE UserID = ? AND CreatedDate = ?";
+  const formattedDate = formatDate(today);
+  var query =
+    "SELECT * FROM tasks  WHERE UserID = ? AND (CreatedDate = ? OR TaskStatus = 'In Progres') ORDER BY CreatedDate DESC ";
+  db.query(query, [userId, formattedDate], (err, results) => {
+    if (err) {
+      console.error("Query error : ", err);
+      res.status(500).send("Internal server error");
+    } else {
+      res.status(200).json(results);
+    }
+  });
+};
+module.exports.upcomingTasks = (req, res) => {
+  const userId = req.user;
+  const today = new Date();
+  const formattedDate = formatDate(today);
+  var query =
+    "SELECT * FROM tasks  WHERE UserID = ? AND DueDate > ? AND TaskStatus = 'In Progres'";
   db.query(query, [userId, formattedDate], (err, results) => {
     if (err) {
       console.error("Query error : ", err);
@@ -131,14 +144,16 @@ module.exports.deleteTask = (req, res) => {
 };
 // search
 module.exports.searchTask = (req, res) => {
+  console.log("req.user:", req.user);
+  const userId = req.user;
   const searchTerm = req.query.searchTerm;
 
   if (!searchTerm) {
     return res.status(400).json({ error: "Search term is required" });
   }
 
-  const query = "SELECT * FROM tasks WHERE Title LIKE ?";
-  db.query(query, [`%${searchTerm}%`], (err, results) => {
+  const query = "SELECT * FROM tasks WHERE Title LIKE ? AND UserID = ?";
+  db.query(query, [`%${searchTerm}%`, userId], (err, results) => {
     if (err) {
       console.error("Query error:" + err);
       return res.status(500).json({ error: "Internal server error" });
@@ -149,5 +164,21 @@ module.exports.searchTask = (req, res) => {
     }
 
     res.status(200).json(results);
+  });
+};
+// completed tasks
+module.exports.completedTasks = (req, res) => {
+  const userId = req.user;
+  const query = "SELECT * FROM tasks WHERE UserID = ? AND TaskStatus = ?";
+
+  db.query(query, [userId, "Done"], (err, results) => {
+    if (err) {
+      console.error("Query error:", err);
+      return res
+        .status(500)
+        .json({ error: "Failed to retrieve completed tasks" });
+    } else {
+      res.status(200).json(results);
+    }
   });
 };

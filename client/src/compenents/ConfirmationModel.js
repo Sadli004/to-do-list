@@ -1,7 +1,13 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 
-export const ConfirmationModal = ({ task, confirmDelete }) => {
+export const ConfirmationModal = ({
+  task,
+  setShowConfirmation,
+  setTodoToDelete,
+  setTaskChanged,
+  taskChanged,
+}) => {
   const [taskTitle, setTaskTitle] = useState("");
   const getTask = async () => {
     try {
@@ -13,6 +19,24 @@ export const ConfirmationModal = ({ task, confirmDelete }) => {
     } catch (error) {
       console.error(error);
     }
+  };
+  const confirmDelete = async (confirmed) => {
+    if (confirmed) {
+      await axios
+        .delete(`${process.env.REACT_APP_API_URL}task/${task}`, {
+          withCredentials: true,
+        })
+        .then(function (response) {
+          console.log("Deleted task ", response.data);
+          // setTasks(tasks.filter((task) => task.TaskID !== todoToDelete));
+          setTaskChanged(!taskChanged); // Update state variable
+        })
+        .catch(function (err) {
+          console.log("error deleting task ", err);
+        });
+    }
+    setShowConfirmation(false);
+    setTodoToDelete(null);
   };
   useEffect(() => {
     getTask();

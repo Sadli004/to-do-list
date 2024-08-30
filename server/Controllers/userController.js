@@ -13,21 +13,7 @@ module.exports.getUser = (req, res) => {
     }
   });
 };
-// View User History
-module.exports.viewHistory = (req, res) => {
-  const userId = req.user;
 
-  const query = "SELECT * FROM tasks WHERE UserID = ? AND TaskStatus = 'Done'";
-
-  db.query(query, [userId], (err, result) => {
-    if (err) {
-      console.error("Database query error:", err);
-      res.status(500).json({ error: "Internal server error" });
-    } else {
-      res.json(result);
-    }
-  });
-};
 //   const userId = req.user;
 //   const date = new Date();
 
