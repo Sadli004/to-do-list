@@ -10,8 +10,6 @@ import {
   faBell,
   faCircleCheck,
   faGear,
-  faCalendar,
-  faClock,
   faHourglass,
 } from "@fortawesome/free-solid-svg-icons";
 import Cookies from "js-cookie";

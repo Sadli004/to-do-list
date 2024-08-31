@@ -11,10 +11,10 @@ export const Login = ({ registered }) => {
   const [email, setEmail] = useState("");
   const [error, setError] = useState("");
 
-  const handleLogin = (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
-    axios
-      .post(
+    try {
+      const response = await axios.post(
         `${process.env.REACT_APP_API_URL}user/login`,
         {
           email: email,
@@ -23,15 +23,15 @@ export const Login = ({ registered }) => {
         {
           withCredentials: "true",
         }
-      )
-      .then(function (response) {
-        console.log(response.data);
-        window.location.href = "/";
-      })
-      .catch((err) => {
-        console.log(err);
-        // setError(err);
-      });
+      );
+      console.log(response);
+
+      window.location.href = "/";
+    } catch (error) {
+      console.log(error.response);
+
+      setError(error.response["data"]);
+    }
   };
 
   function navigate(url) {
