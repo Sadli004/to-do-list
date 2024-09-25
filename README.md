@@ -1,11 +1,13 @@
 # Task Manager
 To do list website, to handle user tasks.
 ## Installation
-1. cd to-do-list
-2. cd server
-3. npm install
-4. cd .. > cd client
-5. npm install
+1.
+   ```bash
+   cd server
+   npm install
+   cd ..
+   cd client
+   npm install
 ## Usage
 After launching the project, head to 'http://localhost:YOUR_CLIENT_URL'.
 You'll be directed to the login page, then when you're done you could see the home page where you could manage user tasks.
